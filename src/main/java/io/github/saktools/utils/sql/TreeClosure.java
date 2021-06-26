@@ -23,7 +23,7 @@ public class TreeClosure<IdType> {
         if (sortOrder != null) {
             // 获取当前最大的 sortOrder 值, 如无则使用 1
             String sqlMaxSortOrder;
-            if (parentId == null) {
+            if (parentId != null) {
                 sqlMaxSortOrder = "select max(sort_order) from " + this.tableName + " where parent_id = " + parentId;
             } else {
                 sqlMaxSortOrder = "select max(sort_order) from " + this.tableName + " where parent_id is null";
@@ -41,7 +41,7 @@ public class TreeClosure<IdType> {
      * @param parentId 父Id, 可选, 为null则代表该节点为1级节点
      * @param sortOrder 排序号, 可选, 指定该节点在同级节点中的排序; 如果超过该层级节点的最大sortOrder+1, 则强制设置为 sortOrder+1
      * @param sqlExecuter sql 执行器, 无返回结果
-     * @param getMaxSortOrder sql 执行器, 返回 maxSortOrder
+     * @param getMaxSortOrder sql 执行器, 返回 maxSortOrder, 入参为
      * @param saveEntity sql 执行器, 返回 entityId
      * @param getParentId sql 执行器, 返回 parentId
      */
