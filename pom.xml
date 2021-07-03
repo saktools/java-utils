@@ -6,7 +6,7 @@
 
   <groupId>io.github.saktools</groupId>
   <artifactId>utils</artifactId>
-  <version>0.0.3</version> <!-- 版本里面不要带有-SNAPSHOT字样，否则上传后可能无法在仓库找到并发布 -->
+  <version>0.0.6</version> <!-- 版本里面不要带有-SNAPSHOT字样，否则上传后可能无法在仓库找到并发布 -->
   <name>utils</name>
   <description>一款实用的 java 工具库</description>
   <url>https://github.com/saktools/java-utils</url>
