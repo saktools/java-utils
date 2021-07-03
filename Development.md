@@ -12,28 +12,32 @@
 * 需指定使用 `./others/m2-settings.xml` 文件作为 maven 的全局配置文件
 
 ```shell
+# 构建
+mvn clean install -Dgpg.skip=true
+
+
 #################### 发布到 sonatype 官网仓库
 # 发布 snapshot 版本
-mvn clean deploy -Poss -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Poss -DversionSnapshot=-SNAPSHOT
 # 发布 release 版本
-mvn clean deploy -Poss -Dgpg.skip=true
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Poss
 
 
 
 #################### 发布到 阿里云效-制品仓库
 # 发布 snapshot 版本
-mvn clean deploy -Prdc -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Prdc -DversionSnapshot=-SNAPSHOT
 # 发布 release 版本
-mvn clean deploy -Prdc -Dgpg.skip=true
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Prdc
 
 
 
 
 #################### 发布到 个人nexus3私有仓库
 # 发布 snapshot 版本
-mvn clean deploy -Pxbr -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Pxbr -DversionSnapshot=-SNAPSHOT
 # 发布 release 版本
-mvn clean deploy -Pxbr -Dgpg.skip=true
+mvn jar:jar source:jar-no-fork javadoc:jar deploy:deploy -Pxbr
 ```
 
 ## 其他说明
