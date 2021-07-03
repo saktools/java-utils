@@ -1,0 +1,104 @@
+variables:
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=/m2-repository"
+  MAVEN_CLI_OPTS: "-s others/m2-settings.xml --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_CLI_OPTS_DEPLOY: "${MAVEN_CLI_OPTS} jar:jar source:jar-no-fork javadoc:jar deploy:deploy"
+  CACHE_KEY: "pipeline-${CI_PIPELINE_ID}"
+
+
+cache:
+  paths:
+    - target/
+  key: $CACHE_KEY # 确保缓存只在该 pipeline 的不同 job 间共享
+  policy: pull-push
+
+
+stages:
+  - test-and-build
+  - publish
+
+test-and-build:
+  image: 'maven:3.8.1-openjdk-11'
+  stage: test-and-build
+  only:
+    - develop
+    - master
+  tags:
+    - docker
+  script:
+    - echo $CI_COMMIT_REF_NAME
+    - echo $CI_ENVIRONMENT_SLUG
+    - echo "=============== 测试、构建、打包 ==============="
+    - mvn $MAVEN_CLI_OPTS clean install -Dgpg.skip=true
+    - echo "target文件夹" `ls target/`
+
+
+deploy-xbr:
+  image: 'maven:3.8.1-openjdk-11'
+  stage: publish
+  cache:
+    policy: pull
+    paths:
+      - target/
+    key: $CACHE_KEY
+  only:
+    - develop
+    - master
+  tags:
+    - docker
+  script:
+    - echo "从缓存中恢复的target文件夹" `ls target/`
+    - echo "=============== 发布到自建的 nexus3 的私有仓库  ==============="
+    - >
+      if [ $CI_COMMIT_REF_NAME = "master" ]; then
+        mvn $MAVEN_CLI_OPTS_DEPLOY  -Pxbr
+      else
+        mvn $MAVEN_CLI_OPTS_DEPLOY -Pxbr -DversionSnapshot=-SNAPSHOT
+      fi
+
+
+deploy-rdc:
+  image: 'maven:3.8.1-openjdk-11'
+  stage: publish
+  cache:
+    policy: pull
+    paths:
+      - target/
+    key: $CACHE_KEY
+  only:
+    - develop
+    - master
+  tags:
+    - docker
+  script:
+    - echo "从缓存中恢复的target文件夹" `ls target/`
+    - echo "=============== 发布到阿里云效的制品仓库  ==============="
+    - >
+      if [ $CI_COMMIT_REF_NAME = "master" ]; then
+        mvn $MAVEN_CLI_OPTS_DEPLOY -Prdc
+      else
+        mvn $MAVEN_CLI_OPTS_DEPLOY -Prdc -DversionSnapshot=-SNAPSHOT
+      fi
+
+
+deploy-oss:
+  image: 'maven:3.8.1-openjdk-11'
+  stage: publish
+  cache:
+    policy: pull
+    paths:
+      - target/
+    key: $CACHE_KEY
+  only:
+    - develop
+    - master
+  tags:
+    - docker
+  script:
+    - echo "从缓存中恢复的target文件夹" `ls target/`
+    - echo "=============== 发布到 sonatype 的官方仓库   ==============="
+    - >
+      if [ $CI_COMMIT_REF_NAME = "master" ]; then
+        mvn $MAVEN_CLI_OPTS_DEPLOY -Poss
+      else
+        mvn $MAVEN_CLI_OPTS_DEPLOY -Poss -DversionSnapshot=-SNAPSHOT
+      fi
