@@ -6,18 +6,17 @@
     <proxies></proxies>
 
     <mirrors>
+        <!--    <mirror>-->
+        <!--      <id>xbrnexus3</id>-->
+        <!--      <name>Xbr Nexus3 Maven Group</name>-->
+        <!--      <url>http://nexus.xueboren.cn/repository/maven-group/</url>-->
+        <!--      <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots,!xbr-releases,!xbr-snapshots,!oss-releases,!oss-snapshots</mirrorOf>-->
+        <!--    </mirror>-->
         <mirror>
             <id>alimaven</id>
             <name>Aliyun Maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots</mirrorOf>
-        </mirror>
-
-        <mirror>
-            <id>xbrnexus3</id>
-            <name>Xbr Nexus3 Maven Group</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <mirrorOf>central,jcenter,!xbr-releases,!xbr-snapshots</mirrorOf>
+            <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots,!xbr-releases,!xbr-snapshots,!oss-releases,!oss-snapshots</mirrorOf>
         </mirror>
     </mirrors>
 
@@ -68,6 +67,29 @@
                     rdc-snapshots::default::https://packages.aliyun.com/maven/repository/2117918-snapshot-bBdDTM/
                 </altSnapshotDeploymentRepository>
             </properties>
+            <repositories>
+                <repository>
+                    <id>rdc-releases</id>
+                    <url>https://packages.aliyun.com/maven/repository/2117918-release-lbhiYo/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>rdc-snapshots</id>
+                    <url>https://packages.aliyun.com/maven/repository/2117918-snapshot-bBdDTM/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
         </profile>
 
         <profile>
@@ -80,6 +102,29 @@
                     oss-snapshots::default::https://s01.oss.sonatype.org/content/repositories/snapshots/
                 </altSnapshotDeploymentRepository>
             </properties>
+            <repositories>
+                <repository>
+                    <id>oss-releases</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>oss-snapshots</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
         </profile>
 
         <profile>
@@ -92,6 +137,29 @@
                     xbr-snapshots::default::http://nexus.xueboren.cn/repository/maven-hosted-snapshot/
                 </altSnapshotDeploymentRepository>
             </properties>
+            <repositories>
+                <repository>
+                    <id>xbr-releases</id>
+                    <url>http://nexus.xueboren.cn/repository/maven-hosted-release/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>xbr-snapshots</id>
+                    <url>http://nexus.xueboren.cn/repository/maven-hosted-snapshot/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
         </profile>
     </profiles>
 </settings>
