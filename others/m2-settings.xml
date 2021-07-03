@@ -4,22 +4,94 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
     <pluginGroups></pluginGroups>
     <proxies></proxies>
-    <profiles></profiles>
-
-    <servers>
-        <server>
-            <id>oss</id>
-            <username>saktools</username>
-            <password><![CDATA[----- jira.sonatype.com 登录密码 -----]]></password>
-        </server>
-    </servers>
 
     <mirrors>
         <mirror>
             <id>alimaven</id>
             <name>Aliyun Maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <mirrorOf>central</mirrorOf>
+            <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots</mirrorOf>
+        </mirror>
+
+        <mirror>
+            <id>xbrnexus3</id>
+            <name>Xbr Nexus3 Maven Group</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <mirrorOf>central,jcenter,!xbr-releases,!xbr-snapshots</mirrorOf>
         </mirror>
     </mirrors>
+
+
+    <servers>
+        <server>
+            <id>oss-releases</id>
+            <username>saktools</username>
+            <password><![CDATA[0810&XbrHz1118]]></password>
+        </server>
+        <server>
+            <id>oss-snapshots</id>
+            <username>saktools</username>
+            <password><![CDATA[0810&XbrHz1118]]></password>
+        </server>
+
+        <server>
+            <id>rdc-releases</id>
+            <username>5fca6a1dece168490c55c44b</username>
+            <password>7nGPoV8PQIAM</password>
+        </server>
+        <server>
+            <id>rdc-snapshots</id>
+            <username>5fca6a1dece168490c55c44b</username>
+            <password>7nGPoV8PQIAM</password>
+        </server>
+
+        <server>
+            <id>xbr-releases</id>
+            <username>xbrtest</username>
+            <password>pxbrtest</password>
+        </server>
+        <server>
+            <id>xbr-snapshots</id>
+            <username>xbrtest</username>
+            <password>pxbrtest</password>
+        </server>
+    </servers>
+
+    <profiles>
+        <profile>
+            <id>rdc</id>
+            <properties>
+                <altReleaseDeploymentRepository>
+                    rdc-releases::default::https://packages.aliyun.com/maven/repository/2117918-release-lbhiYo/
+                </altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>
+                    rdc-snapshots::default::https://packages.aliyun.com/maven/repository/2117918-snapshot-bBdDTM/
+                </altSnapshotDeploymentRepository>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>oss</id>
+            <properties>
+                <altReleaseDeploymentRepository>
+                    oss-releases::default::https://s01.oss.sonatype.org/content/repositories/releases/
+                </altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>
+                    oss-snapshots::default::https://s01.oss.sonatype.org/content/repositories/snapshots/
+                </altSnapshotDeploymentRepository>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>xbr</id>
+            <properties>
+                <altReleaseDeploymentRepository>
+                    xbr-releases::default::http://nexus.xueboren.cn/repository/maven-hosted-release/
+                </altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>
+                    xbr-snapshots::default::http://nexus.xueboren.cn/repository/maven-hosted-snapshot/
+                </altSnapshotDeploymentRepository>
+            </properties>
+        </profile>
+    </profiles>
 </settings>

@@ -1,5 +1,43 @@
 # 开发指南
 
+## 待办
+
+* TODO: 下载时如何配置settings.xml, 以使其他项目可到指定仓库下载该私有 jar 包
+* 与 Gitlab Runner 集成, 自动同时发布到3个仓库
+    - 拆分 nvm deploy 步骤: 先打包，再仅执行发布的步骤到3个私有仓库
+
+## 构建并发布到不同的 maven 仓库
+
+* [发布到阿里云效-制品仓库](https://packages.aliyun.com/repos/2117918-release-lbhiYo/guide)
+* 需指定使用 `./others/m2-settings.xml` 文件作为 maven 的全局配置文件
+
+```shell
+#################### 发布到 sonatype 官网仓库
+# 发布 snapshot 版本
+mvn clean deploy -Poss -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+# 发布 release 版本
+mvn clean deploy -Poss -Dgpg.skip=true
+
+
+
+#################### 发布到 阿里云效-制品仓库
+# 发布 snapshot 版本
+mvn clean deploy -Prdc -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+# 发布 release 版本
+mvn clean deploy -Prdc -Dgpg.skip=true
+
+
+
+
+#################### 发布到 个人nexus3私有仓库
+# 发布 snapshot 版本
+mvn clean deploy -Pxbr -Dgpg.skip=true -DversionSnapshot=-SNAPSHOT
+# 发布 release 版本
+mvn clean deploy -Pxbr -Dgpg.skip=true
+```
+
+## 其他说明
+
 * 如何部署: `mvn clean deploy`, 需在命令行中输入 GPG 密钥的密码
 * 发布成功后可在以下链接确定
     - sonatype 官方仓库: https://s01.oss.sonatype.org/#nexus-search;quick~io.github.saktools
